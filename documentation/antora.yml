@@ -1,0 +1,5 @@
+name: demo-tutorial
+title: Demo Tutorial
+version: master
+nav:
+  - modules/ROOT/nav.adoc
