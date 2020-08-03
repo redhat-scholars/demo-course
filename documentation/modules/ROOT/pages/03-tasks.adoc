@@ -4,7 +4,7 @@
 :branch: master
 :github-repo: https://github.com/redhat-developer-demos/tekton-tutorial/blob/{branch}
 :tasks-repo: tasks
-:chapter-namespace: tektontutorial
+:chapter-namespace: demotutorial
 // END OF ATTRIBUTES THAT NEED TO PASSED TO THE INCLUDED DOCUMENT
 
 //Included document - version@component:module:partial$document_file
