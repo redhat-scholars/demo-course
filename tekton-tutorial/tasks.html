@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Tasks :: Demo Template Tutorial</title>
-    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/demo-tutorial/03-tasks.html">
-    <link rel="prev" href="../tekton-tutorial/tasks.html#tekton-task-build-sources">
-    <link rel="next" href="02-deploy.html#deploy">
+    <link rel="canonical" href="https://redhat-scholars.github.io/course-template/tekton-tutorial/tasks.html">
+    <link rel="prev" href="pipeline-resources.html">
+    <link rel="next" href="pipelines.html">
     <meta name="generator" content="Antora 2.3.3">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -62,39 +62,285 @@
   </nav>
 </header>
 <div class="body">
-<div class="nav-container" data-component="demo-tutorial" data-version="master">
+<div class="nav-container" data-component="tekton-tutorial" data-version="master">
   <aside class="nav">
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="index.html">Demo Tutorial</a></h3>
+    <h3 class="title"><a href="index.html">Tekton Tutorial</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="01-setup.html">1. Setup</a>
+    <a class="nav-link" href="setup.html">Setup</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-setup.html#prerequisite">Prerequisites</a>
+    <a class="nav-link" href="setup.html#tekton-prerequisites">Prerequisites</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="01-setup.html#minikube">Setup Minikube</a>
+    <a class="nav-link" href="setup.html#download-tutorial-sources">Download Tutorial Sources</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#kubernetes-cluster">Choose your Kubernetes Cluster</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#tutorial-dev-env">Development Environment</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#deploy-tekton">Install Tekton</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="setup.html#install-tekton-cli">Install Tekton CLI</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-deploy.html">2. Deploy Service</a>
+    <a class="nav-link" href="pipeline-resources.html">Pipeline Resources</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../tekton-tutorial/tasks.html#tekton-task-build-sources">Build Cloud Native Application(Full Site)</a>
+    <a class="nav-link" href="pipeline-resources.html#tekton-res-prerequisite">Prerequisites</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#tekton-task-build-sources">Build Cloud Native Application(Partial)</a>
+    <a class="nav-link" href="pipeline-resources.html#tekton-res-create">Create Pipeline Resource</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-deploy.html#deploy">Deploy Service</a>
+    <a class="nav-link" href="pipeline-resources.html#tekton-res-deploy">Deploy Pipeline Resource</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pipeline-resources.html#tkn-see-what-you-have-deployed">See what you have deployed</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="tasks.html">Tasks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#tekton-tasks]">Tasks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#tekton-task-clone">Clone Source Code</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-task-list-ws">Know your Workspace</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-task-clustertask">Cluster Task</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-tasks-points-to-ponder">Points to Ponder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#tekton-task-build-sources">Build Cloud Native Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#build-sources">Build Sources</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#build-linux-image">Build Image</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#push-linux-image">Push Image</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-task-deploy">Deploy Task</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-task-run">TaskRun</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-test-task-output">Test Task Output</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-task-step-template">Step Template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#tekton-task-cleanup">Clean</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="pipelines.html">Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pipelines.html#tekton-add-tasks">Add Tasks from Catalog</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pipelines.html#tekton-pipeline-create">Create Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pipelines.html#tekton-pipeline-deploy">Deploy Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pipelines.html#tekton-pipeline-run">Run Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pipelines.html#tekton-test-pipeline">Test Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="pipelines.html#tekton-pipeline-cleanup">Clean</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="workspaces.html">Workspaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="workspaces.html#ws-overview">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="workspaces.html#ws-prepare">Prepare for Using Workspaces</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-tasks-deploy">Deploy Tasks from Catalog</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-deploy-nexus">Deploy Nexus</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-create-maven-settings-cm">Create Maven Settings</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-deploy-knative">Deploy Knative</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-check-sc">Check Default Storage Class</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="workspaces.html#ws-pipeline-overview">Java Application Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="workspaces.html#ws-use-pvc">Using Persistent Volumes as Workspace</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-use-pvc-git-clone">Git Clone TaskRun</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-pvc-points-to-ponder">Points to Ponder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="workspaces.html#ws-use-cm">Using ConfigMap as Workspace</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-use-cm-mvn-run">Run maven Task</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#use-cm-points-to-ponder">Points to Ponder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="workspaces.html#ws-deploy-pipeline">Deploy Pipeline</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-create-pipeline">Create Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-run-pipeline">Run Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="workspaces.html#ws-verify-service">Verify Deployed Service</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="workspaces.html#tekton-ws-cleanup">Cleanup</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="private_reg_repos.html">Private Registries and Repositories</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="private_reg_repos.html#tkn-prr-overview">Overview</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="private_reg_repos.html#tekton-pull-from-remote-repo">Pulling from Private Source Repository</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="private_reg_repos.html#tekton-github-repo-secret">Create Github PAT Secret</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="private_reg_repos.html#tekton-github-sa">Create Service Account</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="private_reg_repos.html#tekton-create-clone-pipeline">Create And Run Pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="private_reg_repos.html#tekton-push-to-external-reg">Pushing To External Registry</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="private_reg_repos.html#tekton-push-registry-secret">Create Registry Secret</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="private_reg_repos.html#tekton-build-sa">Create Service Account</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="private_reg_repos.html#tekton-create-build-push-pipeline">Create And Run Pipeline</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="private_reg_repos.html#tekton-remote-ref-points">Points to Ponder</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="private_reg_repos.html#tekton-auth-cleanup">Cleanup</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="triggers.html">Triggers</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#install-tekton-triggers">Instal Tekton Triggers</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tkn-triggers-prepare">Prepare Namespace</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tkn-triggers-init-repo">Initialize Source Repository</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tkn-triggers-create-sa"> Pipeline Service Account</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tkn-triggers-template">Trigger Template</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tkn-triggers-bindings">Trigger Bindings</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tkn-triggers-eventlistener">Trigger Event Listener</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tekton-triggers-in-action">Triggers in Action</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="triggers.html#tekton-triggers-ptp">Points to Ponder</a>
   </li>
 </ul>
   </li>
@@ -105,23 +351,23 @@
 </div>
 <div class="nav-panel-explore" data-panel="explore">
   <div class="context">
-    <span class="title">Demo Tutorial</span>
+    <span class="title">Tekton Tutorial</span>
     <span class="version">master</span>
   </div>
   <ul class="components">
-    <li class="component is-current">
+    <li class="component">
       <span class="title">Demo Tutorial</span>
       <ul class="versions">
-        <li class="version is-current is-latest">
-          <a href="index.html">master</a>
+        <li class="version is-latest">
+          <a href="../demo-tutorial/index.html">master</a>
         </li>
       </ul>
     </li>
-    <li class="component">
+    <li class="component is-current">
       <span class="title">Tekton Tutorial</span>
       <ul class="versions">
-        <li class="version is-latest">
-          <a href="../tekton-tutorial/index.html">master</a>
+        <li class="version is-current is-latest">
+          <a href="index.html">master</a>
         </li>
       </ul>
     </li>
@@ -133,15 +379,14 @@
 <main class="article">
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link"></a>
+  <a href="../demo-tutorial/index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="index.html">Demo Tutorial</a></li>
-    <li><a href="02-deploy.html">2. Deploy Service</a></li>
-    <li><a href="#tekton-task-build-sources">Build Cloud Native Application(Partial)</a></li>
+    <li><a href="index.html">Tekton Tutorial</a></li>
+    <li><a href="tasks.html">Tasks</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-scholars/demo-course/edit/master/documentation/modules/ROOT/pages/03-tasks.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/scholars-demo/documentation/modules/ROOT/pages/tasks.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
@@ -275,7 +520,7 @@ The <a href="#tekton-task-run">TaskRun</a> could override the parameter values, 
 </ul>
 </div>
 <div class="paragraph">
-<p>The parameters that were part of the menu:spec[inputs &gt; params] can be used in the steps using the notation <code>$(&lt;variable-name&gt;)</code>.</p>
+<p>The parameters that were part of the <span class="menuseq"><b class="menu">spec</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="submenu">inputs</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">params</b></span> can be used in the steps using the notation <code>$(&lt;variable-name&gt;)</code>.</p>
 </div>
 <div class="sect2">
 <h3 id="tekton-task-clone"><a class="anchor" href="#tekton-task-clone"></a>Clone Source Code</h3>
@@ -430,7 +675,7 @@ Namespace:   tektontutorial
 </div>
 </div>
 <div class="paragraph">
-<p>Be sure press kbd:[Enter] to start the TaskRun after providing inputs to the prompts.</p>
+<p>Be sure press <kbd>Enter</kbd> to start the TaskRun after providing inputs to the prompts.</p>
 </div>
 </td>
 </tr>
@@ -851,7 +1096,7 @@ outputs:
 </td>
 <td class="content">
 <div class="paragraph">
-<p>For Task inputs and outputs - we will use the <a href="#pipeline-resources.adoc#tkn-see-what-you-have-deployed" class="page unresolved">PipelineResources</a> that was created in previous chapter.</p>
+<p>For Task inputs and outputs - we will use the <a href="pipeline-resources.html#tkn-see-what-you-have-deployed" class="page">PipelineResources</a> that was created in previous chapter.</p>
 </div>
 </td>
 </tr>
@@ -1550,8 +1795,8 @@ $TUTORIAL_HOME/bin/clean_completed.sh</code></pre>
 </div>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="../tekton-tutorial/tasks.html#tekton-task-build-sources">Build Cloud Native Application(Full Site)</a></span>
-  <span class="next"><a href="02-deploy.html#deploy">Deploy Service</a></span>
+  <span class="prev"><a href="pipeline-resources.html">Pipeline Resources</a></span>
+  <span class="next"><a href="pipelines.html">Pipelines</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">
