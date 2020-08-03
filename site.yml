@@ -11,6 +11,9 @@ content:
     - url: .
       branches: HEAD
       start_path: documentation
+    - url: https://github.com/redhat-developer-demos/tekton-tutorial
+      branches: scholars-demo
+      start_path: documentation
 
 asciidoc:
   attributes:
