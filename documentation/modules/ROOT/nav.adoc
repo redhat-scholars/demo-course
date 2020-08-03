@@ -3,5 +3,5 @@
 ** xref:01-setup.adoc#minikube[Setup Minikube]
 
 * xref:02-deploy.adoc[2. Deploy Service]
-** xref:tekton-tutorial:ROOT:tasks.adoc#tekton-task-build-sources[Build Cloud Native Application]
-** xref:02-deploy.adoc#deploy[Deploy Dervice]
+** xref:03-tasks.adoc#tekton-task-build-sources[Build Cloud Native Application]
+** xref:02-deploy.adoc#deploy[Deploy Service]

@@ -1,13 +1,13 @@
 = Setup
 include::_attributes.adoc[]
 
-== User Info 
+== User Information
 
 Hello %USER% your password is %PASSWORD%
 
 (OR)
 
-Hello $USERNAME your password is $PASSWORD
+Hello $USRNAME your password is $PASSWORD
 
 Here is a User specific link with a role https://console.openshift.com[OpenShift Console,role='userfied-link']
 

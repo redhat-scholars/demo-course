@@ -1,0 +1,12 @@
+= Tasks
+
+// START OF ATTRIBUTES THAT NEED TO PASSED TO THE INCLUDED DOCUMENT
+:branch: master
+:github-repo: https://github.com/redhat-developer-demos/tekton-tutorial/blob/{branch}
+:tasks-repo: tasks
+:chapter-namespace: tektontutorial
+// END OF ATTRIBUTES THAT NEED TO PASSED TO THE INCLUDED DOCUMENT
+
+//Included document - version@component:module:partial$document_file
+//
+include::master@tekton-tutorial:ROOT:partial$_tasks.adoc[]
