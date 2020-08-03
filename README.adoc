@@ -1,3 +1,6 @@
+= Demo Course
+
+This is demo courseware, showing the site content build examples.
 
 == Run development mode
 
