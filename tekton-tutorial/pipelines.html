@@ -346,6 +346,64 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/index.html">OpenShift Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/setup.html">Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/openshift_pipelines.html">Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-project">Create Project</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#required-tasks">Required Cluster Tasks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-pipelines">View Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-watch-pipelines">Watch Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-app">Application Topology</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-pipeline-points">Points to Ponder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/openshift_triggers.html">Triggers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -386,7 +444,7 @@
     <li><a href="pipelines.html">Pipelines</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/scholars-demo/documentation/modules/ROOT/pages/pipelines.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/master/documentation/modules/ROOT/pages/pipelines.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
@@ -434,7 +492,7 @@
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                            TYPE    DETAILS
-git-source                      git     url: https://github.com/redhat-developer-demos/tekton-tutorial
+git-source                      git     url: https://github.com/redhat-scholars/tekton-tutorial
 tekton-tutorial-greeter-image   image   url: example.com/rhdevelopers/tekton-tutorial-greeter</code></pre>
 </div>
 </div>
@@ -479,8 +537,8 @@ source-lister   7 seconds ago</code></pre>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n {tutorial-namespace} \
-  -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/openshift-client/openshift-client-task.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/v1beta1/openshift-client/openshift-client-task.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl create -n tektontutorial \
+  -f <a href="https://raw.githubusercontent.com/tektoncd/catalog/master/task/openshift-client/0.1/openshift-client.yaml" class="bare">https://raw.githubusercontent.com/tektoncd/catalog/master/task/openshift-client/0.1/openshift-client.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -517,7 +575,7 @@ source-lister      10 minutes ago</code></pre>
 <p>The following snippet shows what a Tekton Pipeline YAML looks like:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/pipelines/svc-deploy.yaml">svc-deploy.yaml</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/pipelines/svc-deploy.yaml">svc-deploy.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: Pipeline
@@ -558,11 +616,11 @@ spec:
       params:
         - name: ARGS
           value:
-            - 'apply'
-            - '-f'
-            - '/workspace/source/$(params.contextDir)/k8s/deployment.yaml'
-            - '-f'
-            - '/workspace/source/$(params.contextDir)/k8s/service.yaml'</code></pre>
+            - "apply"
+            - "-f"
+            - "/workspace/source/k8s/deployment.yaml"
+            - "-f"
+            - "/workspace/source/k8s/service.yaml"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -658,7 +716,7 @@ Only pipeline resources of same type can be bound. e.g. resource of type <code>g
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n {tutorial-namespace} -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/pipelines/svc-deploy.yaml" target="_blank" rel="noopener">svc-deploy.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/pipelines/svc-deploy.yaml" target="_blank" rel="noopener">svc-deploy.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -698,11 +756,11 @@ svc-deploy   4 seconds ago   ---        ---       ---        ---</code></pre>
 <h2 id="tekton-pipeline-run"><a class="anchor" href="#tekton-pipeline-run"></a>Run Pipeline</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>A Kubernetes Service Account is required to deploy applications in to a Kubernetes namespace. The following resource defines a service account called <code>pipeline</code> in namespace <code>{tutorial-namespace}</code>, which will have needed permissions in the <code>{tutorial-namespace}</code> namespace to perform Tekton tasks.</p>
+<p>A Kubernetes Service Account is required to deploy applications in to a Kubernetes namespace. The following resource defines a service account called <code>pipeline</code> in namespace <code>tektontutorial</code>, which will have needed permissions in the <code>tektontutorial</code> namespace to perform Tekton tasks.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n {tutorial-namespace} -f $TUTORIAL_HOME/kubernetes/pipeline-sa-role.yaml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f $TUTORIAL_HOME/kubernetes/pipeline-sa-role.yaml</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -725,7 +783,7 @@ OpenShift Pipelines creates and uses the <code>pipeline</code> SA by default.
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn pipeline start svc-deploy \<i class="conum" data-value="1"></i><b>(1)</b>
  --resource="appSource=git-source" \<i class="conum" data-value="2"></i><b>(2)</b>
  --resource="appImage=tekton-tutorial-greeter-image" \<i class="conum" data-value="3"></i><b>(3)</b>
- --param="contextDir=apps/greeter/java/springboot" \<i class="conum" data-value="4"></i><b>(4)</b>
+ --param="contextDir=springboot" \<i class="conum" data-value="4"></i><b>(4)</b>
  --serviceaccount='pipeline'\<i class="conum" data-value="5"></i><b>(5)</b>
  --showlog</code></pre>
 </div>
@@ -775,28 +833,12 @@ OpenShift Pipelines creates and uses the <code>pipeline</code> SA by default.
 </table>
 </div>
 <div class="paragraph">
-<p>To check the status of the PipelineRun use the <code>logs</code> command of pipelinerun like:</p>
+<p>View the pipeline run logs using,</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn pr ls</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn pr logs -f -a $(tkn pr ls -n tektontutorial | awk 'NR==2{print $1}')</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>Use one task run for which you need the log from list above:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn pr logs -f -a &lt;pipeline-run-name&gt; <i class="conum" data-value="1"></i><b>(1)</b></code></pre>
-</div>
-</div>
-<div class="colist arabic">
-<table>
-<tr>
-<td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>The <code>-f</code> or <code>-a</code> allows to tail the logs from all the containers of the pipeline tasks. For more options run <code>tkn pr --help</code></td>
-</tr>
-</table>
 </div>
 <div class="paragraph">
 <p>If you see the PipelineRun status as <code>Failed</code> or <code>Error</code> use the following command to check the reason for error:</p>
@@ -816,7 +858,7 @@ OpenShift Pipelines creates and uses the <code>pipeline</code> SA by default.
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SVC_URL=$(minikube -p {tutorial-namespace} -n {tutorial-namespace} service greeter --url)</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SVC_URL=$(minikube -p tektontutorial -n tektontutorial service greeter --url)</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -848,7 +890,7 @@ SVC_URL=$(oc get routes greeter -o yaml | yq r - 'spec.url.host' )</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The <code>http</code> command should return a response containing a line similar to <strong>hello</strong></p>
+<p>The <code>http</code> command should return a response containing a line similar to <strong>Meeow!! from Tekton 😺🚀</strong></p>
 </div>
 </div>
 </div>

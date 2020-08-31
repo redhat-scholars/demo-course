@@ -346,6 +346,64 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/index.html">OpenShift Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/setup.html">Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/openshift_pipelines.html">Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-project">Create Project</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#required-tasks">Required Cluster Tasks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-pipelines">View Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-watch-pipelines">Watch Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-app">Application Topology</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-pipeline-points">Points to Ponder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/openshift_triggers.html">Triggers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -386,7 +444,7 @@
     <li><a href="tasks.html">Tasks</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/scholars-demo/documentation/modules/ROOT/pages/tasks.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/master/documentation/modules/ROOT/pages/tasks.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
@@ -530,15 +588,16 @@ The <a href="#tekton-task-run">TaskRun</a> could override the parameter values, 
 <div class="listingblock">
 <div class="title">List application source code</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: source-lister
 spec:
   params:
     - name: contextDir
-      description: 'The context directory within the repository for sources'
-      default: apps/greeter/java/quarkus
+      description: "The context directory within the repository for sources"
+      default: quarkus
   resources:
     inputs:
       - name: source
@@ -546,7 +605,7 @@ spec:
   steps:
     - name: ls-build-sources
       image: busybox
-      command: ['ls', '-ltr', '/workspace/source/$(inputs.params.contextDir)']</code></pre>
+      command: ["ls", "-ltr", "/workspace/source/$(inputs.params.contextDir)"]</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -557,7 +616,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n {tutorial-namespace} -f source-lister.yaml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f source-lister.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -689,7 +748,7 @@ Namespace:   tektontutorial
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">? Value for param `contextDir` of type `string`? (Default is `apps/greeter/java/quarkus`) apps/greeter/java/quarkus
 TaskRun started: source-lister-run-nbpvz
 Waiting for logs to be available...
-[git-source-git-source-qtp5j] {"level":"info","ts":1595743350.5350783,"caller":"git/git.go:105","msg":"Successfully cloned https://github.com/redhat-developer-demos/tekton-tutorial @ master in path /workspace/source"}
+[git-source-git-source-qtp5j] {"level":"info","ts":1595743350.5350783,"caller":"git/git.go:105","msg":"Successfully cloned https://github.com/redhat-scholars/tekton-tutorial @ master in path /workspace/source"}
 [git-source-git-source-qtp5j] {"level":"warn","ts":1595743350.5351503,"caller":"git/git.go:152","msg":"Unexpected error: creating symlink: symlink /tekton/home/.ssh /root/.ssh: file exists"}
 [git-source-git-source-qtp5j] {"level":"info","ts":1595743350.5708065,"caller":"git/git.go:133","msg":"Successfully initialized and updated submodules in path /workspace/source"}
 
@@ -756,7 +815,7 @@ Waiting for logs to be available...
 ...
 [git-source-git-source-rdr2k] {"level":"info","ts":1585065123.3817806,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/refs/heads/master: no such file or directory"}
 [git-source-git-source-rdr2k] {"level":"info","ts":1585065133.3997571,"logger":"fallback-logger","caller":"logging/config.go:69","msg":"Fetch GitHub commit ID from kodata failed: open /var/run/ko/refs/heads/master: no such file or directory"}
-[git-source-git-source-rdr2k] {"level":"info","ts":1585065138.9021251,"logger":"fallback-logger","caller":"git/git.go:102","msg":"Successfully cloned https://github.com/redhat-developer-demos/tekton-tutorial @ master in path /workspace/source"}
+[git-source-git-source-rdr2k] {"level":"info","ts":1585065138.9021251,"logger":"fallback-logger","caller":"git/git.go:102","msg":"Successfully cloned https://github.com/redhat-scholars/tekton-tutorial @ master in path /workspace/source"}
 [git-source-git-source-rdr2k] {"level":"warn","ts":1585065138.902316,"logger":"fallback-logger","caller":"git/git.go:149","msg":"Unexpected error: creating symlink: symlink /tekton/home/.ssh /root/.ssh: file exists"}
 [git-source-git-source-rdr2k] {"level":"info","ts":1585065138.9946759,"logger":"fallback-logger","caller":"git/git.go:130","msg":"Successfully initialized and updated submodules in path /workspace/source"}
 
@@ -793,7 +852,7 @@ Waiting for logs to be available...
 <h2 id="tekton-task-clustertask"><a class="anchor" href="#tekton-task-clustertask"></a>Cluster Task</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The tasks are by default tied to namespace i.e their visibility is restricted to the namespace where they were created. E.g. the <code>source-lister</code> that we created and ran earlier is tied to {tutorial-namespace}.</p>
+<p>The tasks are by default tied to namespace i.e their visibility is restricted to the namespace where they were created. E.g. the <code>source-lister</code> that we created and ran earlier is tied to tektontutorial.</p>
 </div>
 <div class="paragraph">
 <p>To check lets create a new namespace called <code>clustertask-demo</code>:</p>
@@ -850,7 +909,7 @@ spec:
     - image: alpine
       script: | <i class="conum" data-value="2"></i><b>(2)</b>
         #!/bin/sh
-        echo 'Tekton Rocks!!'</code></pre>
+        echo 'Meeow!! from Tekton 😺🚀'</code></pre>
 </div>
 </div>
 <div class="colist arabic">
@@ -963,24 +1022,27 @@ echoer                 18 minutes ago</code></pre>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">TaskRun started: echoer-run-75n6g
 Waiting for logs to be available...
-[unnamed-0] + echo 'Tekton Rocks!!'
-[unnamed-0] Tekton Rocks!!</code></pre>
+[unnamed-0] Meeow!! from Tekton 😺🚀</code></pre>
 </div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_run_clustertask_echoer_in_other_namespaces"><a class="anchor" href="#_run_clustertask_echoer_in_other_namespaces"></a>Run ClusterTask <code>echoer</code> in other namespace(s)</h3>
 <div class="paragraph">
-<p>Let us now shift back to <code>{tutorial-namespace}</code> and run the <code>echoer</code> task again:</p>
+<p>Let us now shift back to <code>tektontutorial</code> and run the <code>echoer</code> task again:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl config set-context --current --namespace={tutorial-namespace} &amp;&amp; \
-tkn clustertask start echoer --showlog</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl config set-context --current --namespace=tektontutorial</code></pre>
+</div>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn clustertask start echoer --showlog</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The command should produce an identical output as show <a href="#tekton-rocks-output">above</a>.</p>
+<p>The command should produce an identical output as shown in <a href="#tekton-rocks-output">above</a>.</p>
 </div>
 </div>
 </div>
@@ -1026,7 +1088,7 @@ tkn clustertask start echoer --showlog</code></pre>
 </ol>
 </div>
 <div class="paragraph">
-<p>The task <code>build-app</code> is used to build the <a href="https://github.com/redhat-developer-demos/tekton-tutorial/tree/master/apps/greeter/java/quarkus">Java application</a> that is part of the tutorial. As a step one(<code>build-sources</code>) the application will be built using <a href="https://apache.maven.org">Apache Maven</a>, then the step two (<code>build-image</code>) the application artifacts a <strong>jar</strong> in this case will be used to built the linux container image using <a href="https://buildah.io">buildah</a>, the <a href="https://github.com/redhat-developer-demos/tekton-tutorial/tree/master/apps/greeter/java/quarkus/Dockerfile.jvm">Dockerfile</a> in the sources will be used as base to build the linux container image and as part of the last step(<code>build-push</code>) the built linux container image will be pushed to the container registry.</p>
+<p>The task <code>build-app</code> is used to build the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus">Java application</a> that is part of the tutorial. As a step one(<code>build-sources</code>) the application will be built using <a href="https://apache.maven.org">Apache Maven</a>, then the step two (<code>build-image</code>) the application artifacts a <strong>jar</strong> in this case will be used to built the linux container image using <a href="https://buildah.io">buildah</a>, the <a href="https://github.com/redhat-scholars/tekton-tutorial/tree/master/apps/greeter/java/quarkus/Dockerfile.jvm">Dockerfile</a> in the sources will be used as base to build the linux container image and as part of the last step(<code>build-push</code>) the built linux container image will be pushed to the container registry.</p>
 </div>
 <div class="paragraph">
 <p>The following section explains the three Task steps. The <a href="#tekton-task-deploy">Deploy a task</a> will finally deploy all these three steps together as one single <code>build-app</code> task.</p>
@@ -1034,7 +1096,7 @@ tkn clustertask start echoer --showlog</code></pre>
 <div class="sect2">
 <h3 id="task-parameters"><a class="anchor" href="#task-parameters"></a>Step :: Task Inputs and Outputs</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">task inputs and outputs</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">task inputs and outputs</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">inputs:
     resources: <i class="conum" data-value="1"></i><b>(1)</b>
@@ -1043,7 +1105,7 @@ tkn clustertask start echoer --showlog</code></pre>
     params:
       - name: contextDir <i class="conum" data-value="2"></i><b>(2)</b>
         description: the context dir within source
-        default: .
+        default: springboot
       - name: destinationImage <i class="conum" data-value="3"></i><b>(3)</b>
         description: the fully qualified image name
         default: "$(outputs.resources.builtImage.url)"
@@ -1106,7 +1168,7 @@ outputs:
 <div class="sect2">
 <h3 id="build-sources"><a class="anchor" href="#build-sources"></a>Step 1 :: Build Application Sources</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L32-L43" target="_blank" rel="noopener">step-build-sources</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L32-L43" target="_blank" rel="noopener">step-build-sources</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- name: build-sources
   image: docker.io/maven:3.6.3-jdk-8-slim
@@ -1115,6 +1177,8 @@ outputs:
     - mvn
   args: <i class="conum" data-value="3"></i><b>(3)</b>
     - -DskipTests
+    - -pl
+    - $(inputs.params.contextDir)
     - clean
     - package
   env: <i class="conum" data-value="4"></i><b>(4)</b>
@@ -1126,7 +1190,7 @@ outputs:
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>the working dir or the context directory within the sources from there the build command will be run</td>
+<td>the working dir or the context directory within the sources from where the build command(s) will be run</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
@@ -1134,7 +1198,7 @@ outputs:
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>the build command arguments</td>
+<td>the maven build command arguments</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
@@ -1146,7 +1210,7 @@ outputs:
 <div class="sect2">
 <h3 id="build-linux-image"><a class="anchor" href="#build-linux-image"></a>Step 2 :: Build Application Linux Container Image</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L44-L62" target="_blank" rel="noopener">step-build-image</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L44-L62" target="_blank" rel="noopener">step-build-image</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- name: build-image
   image: quay.io/buildah/stable
@@ -1184,7 +1248,7 @@ outputs:
 <div class="sect2">
 <h3 id="push-linux-image"><a class="anchor" href="#push-linux-image"></a>Step 3:: Push Application Linux Container Image</h3>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L63-L78" target="_blank" rel="noopener">step-build-image</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml#L63-L78" target="_blank" rel="noopener">step-build-image</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">- name: push-image
   image: quay.io/buildah/stable
@@ -1207,9 +1271,10 @@ outputs:
 <p>Having see the three individual steps of the <code>build-app</code> task, the following snippet shows all three chained together:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">build-app-task.yaml</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml" target="_blank" rel="noopener">build-app-task.yaml</a></div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: build-app
@@ -1223,14 +1288,14 @@ spec:
       default: <a href="https://repo.maven.apache.org/maven2/" class="bare">https://repo.maven.apache.org/maven2/</a>
     - name: destinationImage
       description: the fully qualified image name
-      default: '$(outputs.resources.builtImage.url)'
+      default: "$(outputs.resources.builtImage.url)"
     - name: dockerFile
       description: the docker file to used for building the application
       default: Dockerfile
     - name: tlsVerify
       description: tls verify
       type: string
-      default: 'false'
+      default: "false"
   resources:
     inputs:
       - name: source
@@ -1240,8 +1305,8 @@ spec:
         type: image
   steps:
     - name: build-sources
-      image: docker.io/maven:3.6.3-jdk-8-slim
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      image: docker.io/maven:3.6.3-openjdk-11-slim
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
       command:
         - mvn
       args:
@@ -1253,17 +1318,17 @@ spec:
           value: /home/tekton
     - name: build-image
       image: quay.io/buildah/stable
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'bud'
-        - '--layers'
-        - '-f'
-        - '$(inputs.params.dockerFile)'
-        - '-t'
-        - '$(inputs.params.destinationImage)'
-        - '.'
+        - "bud"
+        - "--layers"
+        - "-f"
+        - "$(inputs.params.dockerFile)"
+        - "-t"
+        - "$(inputs.params.destinationImage)"
+        - "."
       securityContext:
         privileged: true
         runAsUser: 0
@@ -1272,14 +1337,14 @@ spec:
           mountPath: /var/lib/containers
     - name: push-image
       image: quay.io/buildah/stable
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'push'
-        - '--tls-verify=$(inputs.params.tlsVerify)'
+        - "push"
+        - "--tls-verify=$(inputs.params.tlsVerify)"
         - $(inputs.params.destinationImage)
-        - 'docker://$(inputs.params.destinationImage)'
+        - "docker://$(inputs.params.destinationImage)"
       securityContext:
         runAsUser: 0
         privileged: true
@@ -1298,7 +1363,7 @@ spec:
 <h2 id="tekton-task-deploy"><a class="anchor" href="#tekton-task-deploy"></a>Deploy a task</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Make sure we are in the <code>{tutorial-namespace}</code>:</p>
+<p>Make sure we are in the <code>tektontutorial</code>:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -1318,7 +1383,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n {tutorial-namespace} -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/tasks/build-app-task.yaml">build-app-task.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/tasks/build-app-task.yaml">build-app-task.yaml</a></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1370,10 +1435,10 @@ source-lister   7 minutes ago</code></pre>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn task start -n {tutorial-namespace} build-app \<i class="conum" data-value="1"></i><b>(1)</b>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn task start -n tektontutorial build-app \<i class="conum" data-value="1"></i><b>(1)</b>
   --inputresource='source=git-source' \<i class="conum" data-value="2"></i><b>(2)</b>
   --outputresource='builtImage=tekton-tutorial-greeter-image' \<i class="conum" data-value="3"></i><b>(3)</b>
-  --param contextDir='apps/greeter/java/springboot' \<i class="conum" data-value="4"></i><b>(4)</b>
+  --param contextDir='springboot' \<i class="conum" data-value="4"></i><b>(4)</b>
   --showlog<i class="conum" data-value="5"></i><b>(5)</b></code></pre>
 </div>
 </div>
@@ -1518,10 +1583,10 @@ step-image-digest-exporter-52lh6</code></pre>
 <div class="tab-pane" aria-labelledby="tabset1_minikube">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl run demo-greeter -n {tutorial-namespace} \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl run demo-greeter -n tektontutorial \
  --generator='run-pod/v1' \
  --image='example.com/rhdevelopers/tekton-tutorial-greeter' &amp;&amp; \
-kubectl expose pod demo-greeter -n {tutorial-namespace} --port 8080 --type=NodePort</code></pre>
+kubectl expose pod demo-greeter -n tektontutorial --port 8080 --type=NodePort</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1529,7 +1594,7 @@ kubectl expose pod demo-greeter -n {tutorial-namespace} --port 8080 --type=NodeP
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">watch kubectl get pods -n {tutorial-namespace}</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">watch kubectl get pods -n tektontutorial</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1537,14 +1602,14 @@ kubectl expose pod demo-greeter -n {tutorial-namespace} --port 8080 --type=NodeP
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SVC_URL=$(minikube -p {tutorial-namespace} -n {tutorial-namespace} service demo-greeter --url)</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">SVC_URL=$(minikube -p tektontutorial -n tektontutorial service demo-greeter --url)</code></pre>
 </div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset1_openshift">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc expose svc -n {tutorial-namespace} demo-greeter</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc expose svc -n tektontutorial demo-greeter</code></pre>
 </div>
 </div>
 <div class="listingblock console-input">
@@ -1561,7 +1626,7 @@ kubectl expose pod demo-greeter -n {tutorial-namespace} --port 8080 --type=NodeP
 </div>
 </div>
 <div class="paragraph">
-<p>The above command should show an output like <strong>hello</strong></p>
+<p>The above command should show an output like <strong>Meeow!! from Tekton 😺🚀</strong></p>
 </div>
 </div>
 </div>
@@ -1590,7 +1655,8 @@ volumeMounts:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">---
+apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: build-app
@@ -1611,14 +1677,14 @@ spec:
       default: https://repo.maven.apache.org/maven2/
     - name: destinationImage
       description: the fully qualified image name
-      default: '$(outputs.resources.builtImage.url)'
+      default: "$(outputs.resources.builtImage.url)"
     - name: dockerFile
       description: the docker file to used for building the application
       default: Dockerfile
     - name: tlsVerify
       description: tls verify
       type: string
-      default: 'false'
+      default: "false"
   resources:
     inputs:
       - name: source
@@ -1628,7 +1694,7 @@ spec:
         type: image
   steps:
     - name: build-sources
-      image: docker.io/maven:3.6.3-jdk-8-slim
+      image: docker.io/maven:3.6.3-openjdk-11-slim
       command:
         - mvn
       args:
@@ -1638,30 +1704,30 @@ spec:
       env:
         - name: user.home
           value: /home/tekton
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
     - name: build-image
       image: quay.io/buildah/stable
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'bud'
-        - '--layers'
-        - '-f'
-        - '$(inputs.params.dockerFile)'
-        - '-t'
-        - '$(inputs.params.destinationImage)'
-        - '.'
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+        - "bud"
+        - "--layers"
+        - "-f"
+        - "$(inputs.params.dockerFile)"
+        - "-t"
+        - "$(inputs.params.destinationImage)"
+        - "."
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
     - name: push-image
       image: quay.io/buildah/stable
       command:
-        - 'buildah'
+        - "buildah"
       args:
-        - 'push'
-        - '--tls-verify=$(inputs.params.tlsVerify)'
+        - "push"
+        - "--tls-verify=$(inputs.params.tlsVerify)"
         - $(inputs.params.destinationImage)
-        - 'docker://$(inputs.params.destinationImage)'
-      workingDir: '/workspace/source/$(inputs.params.contextDir)'
+        - "docker://$(inputs.params.destinationImage)"
+      workingDir: "/workspace/source/$(inputs.params.contextDir)"
   volumes:
     - name: varlibc
       emptyDir: {}</code></pre>
@@ -1674,7 +1740,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n {tutorial-namespace} -f build-app-task-step-template.yaml</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f build-app-task-step-template.yaml</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1682,10 +1748,10 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn task start -n {tutorial-namespace} build-app \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">tkn task start -n tektontutorial build-app \
   --inputresource='source=git-source' \
   --outputresource='builtImage=tekton-tutorial-greeter-image' \
-  --param contextDir='apps/greeter/java/springboot' \
+  --param contextDir='springboot' \
   --showlog</code></pre>
 </div>
 </div>
@@ -1708,7 +1774,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get pod -n {tutorial-namespace} build-app-run-dnbwp-pod-4hcvr \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get pod -n tektontutorial build-app-run-dnbwp-pod-4hcvr \
 -o=jsonpath="{range .spec.containers[*]}{.name}{'\n'}\
   {'\t'}{'Privileged: '}{.securityContext.privileged}{'\t'}{'User: '}{.securityContext.runAsUser}{'\n'}{end}"</code></pre>
 </div>
@@ -1740,7 +1806,7 @@ step-image-digest-exporter-tr4mf
 <h3 id="_check_volumemounts"><a class="anchor" href="#_check_volumemounts"></a>Check <code>volumeMounts</code></h3>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get pod -n {tutorial-namespace} build-app-run-dnbwp-pod-4hcvr \
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl get pod -n tektontutorial build-app-run-dnbwp-pod-4hcvr \
 -o=jsonpath="{range .spec.containers[*]}{.name}{'\n'}{'\t'}{'Mount Path: '}{.volumeMounts[?(@.name=='varlibc')].mountPath} {'\n'}{end}"</code></pre>
 </div>
 </div>
@@ -1786,10 +1852,16 @@ The Task steps can override the stepTemplate values.
 <div class="sectionbody">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl delete pod -n {tutorial-namespace} demo-greeter
-kubectl delete svc -n {tutorial-namespace} demo-greeter
-# cleans all completed and failed pods
-$TUTORIAL_HOME/bin/clean_completed.sh</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl delete pod -n tektontutorial demo-greeter
+kubectl delete svc -n tektontutorial demo-greeter</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Clean all completed and failed pods</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">$TUTORIAL_HOME/bin/clean_completed.sh</code></pre>
 </div>
 </div>
 </div>

@@ -346,6 +346,64 @@
   </li>
 </ul>
   </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/index.html">OpenShift Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/setup.html">Setup</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/openshift_pipelines.html">Pipelines</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-project">Create Project</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#openshift-pipelines-prep-app-deploy">Prepare Application Deployment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="openshift/openshift_pipelines.html#required-tasks">Required Cluster Tasks</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-update-cluster-tasks">Update Cluster Tasks</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-deploy-app-from-git">Deploy Application from GitHub</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#ocp-create-java-ksvc-pipeline-tpl">Pipeline Template for Java and Knative Service</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-create-ksvc-java-app">Deploy Application with Pipeline</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-pipelines">View Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-watch-pipelines">Watch Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-view-app">Application Topology</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="openshift/openshift_pipelines.html#odc-pipeline-points">Points to Ponder</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="openshift/openshift_triggers.html">Triggers</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
 </ul>
   </nav>
 </div>
@@ -386,7 +444,7 @@
     <li><a href="pipeline-resources.html">Pipeline Resources</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/scholars-demo/documentation/modules/ROOT/pages/pipeline-resources.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/edit/master/documentation/modules/ROOT/pages/pipeline-resources.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
@@ -437,7 +495,7 @@
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">eval $(minikube docker-env) &amp;&amp;\
-minikube profile {tutorial-namespace}</code></pre>
+minikube profile tektontutorial</code></pre>
 </div>
 </div>
 <div class="ulist">
@@ -498,11 +556,11 @@ Kubernetes Version: v1.18.3</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>If you are not on <code>{tutorial-namespace}</code> project, then run following command to change to <code>{tutorial-namespace}</code> project:</p>
+<p>If you are not on <code>tektontutorial</code> project, then run following command to change to <code>tektontutorial</code> project:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc project {tutorial-namespace}</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc project tektontutorial</code></pre>
 </div>
 </div>
 </div>
@@ -513,13 +571,13 @@ Kubernetes Version: v1.18.3</code></pre>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl api-resources --api-group='tekton.dev'</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc api-resources --api-group='tekton.dev'</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>The command show an output like:</p>
 </div>
-<div class="listingblock cosole-output">
+<div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                SHORTNAMES   APIGROUP     NAMESPACED   KIND
 clustertasks                     tekton.dev   false        ClusterTask
@@ -548,7 +606,7 @@ tasks                            tekton.dev   true         Task</code></pre>
 <p>The following snippet shows what a Tekton <code>PipelineResource</code> YAML looks like:</p>
 </div>
 <div class="listingblock">
-<div class="title"><a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/resources/build-resources.yaml" target="_blank" rel="noopener">build-resources.yaml</a></div>
+<div class="title"><a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/resources/build-resources.yaml" target="_blank" rel="noopener">build-resources.yaml</a></div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
@@ -558,9 +616,9 @@ spec:
   type: git
   params:
     - name: url
-      value: <a href="https://github.com/redhat-developer-demos/tekton-tutorial" class="bare">https://github.com/redhat-developer-demos/tekton-tutorial</a>
+      value: <a href="https://github.com/redhat-scholars/tekton-tutorial-greeter" class="bare">https://github.com/redhat-scholars/tekton-tutorial-greeter</a>
     - name: revision
-      value: master
+      value: staging
 ---
 apiVersion: tekton.dev/v1alpha1
 kind: PipelineResource
@@ -573,7 +631,7 @@ spec:
       # use internal registry
       value: example.com/rhdevelopers/tekton-tutorial-greeter
       # if you are on OpenShift uncomment the line below
-      #value: "image-registry.openshift-image-registry.svc:5000/tektontutorial/helloworld"</code></pre>
+      #value: "image-registry.openshift-image-registry.svc:5000/tektontutorial/greeter"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -615,7 +673,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n {tutorial-namespace} -f <a href="https://github.com/redhat-developer-demos/tekton-tutorial/blob/master/resources/build-resources.yaml" target="_blank" rel="noopener">build-resources.yaml</a></code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">kubectl apply -n tektontutorial -f <a href="https://github.com/redhat-scholars/tekton-tutorial/blob/master/resources/build-resources.yaml" target="_blank" rel="noopener">build-resources.yaml</a></code></pre>
 </div>
 </div>
 <div class="listingblock console-output">
@@ -643,7 +701,7 @@ pipelineresource.tekton.dev/tekton-tutorial-greeter-image created</code></pre>
 <div class="listingblock console-output">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">NAME                            TYPE    DETAILS
-git-source                      git     url: https://github.com/redhat-developer-demos/tekton-tutorial
+git-source                      git     url: https://github.com/redhat-scholars/tekton-tutorial
 tekton-tutorial-greeter-image   image   url: example.com/rhdevelopers/tekton-tutorial-greeter</code></pre>
 </div>
 </div>
@@ -666,7 +724,7 @@ PipelineResource Type:   git
 
 Params
 NAME       VALUE
-url        https://github.com/redhat-developer-demos/tekton-tutorial
+url        https://github.com/redhat-scholars/tekton-tutorial
 revision   master
 
 Secret Params
