@@ -12,20 +12,32 @@ content:
       branches: HEAD
       start_path: documentation
     - url: https://github.com/redhat-developer-demos/tekton-tutorial
-      branches: scholars-demo
+      branches: master
+      tags: []
       start_path: documentation
 
 asciidoc:
   attributes:
+    workshop-domain: rhscholars.devx.red
+    openshift-version: 4.5
+    kubernetes-version: v1.18.0
     release-version: master
+    cli: oc
+    openshift-console-url: https://console-openshift-console.apps.example.com
+    etherpad-url: http://example.com
     page-pagination: true
+    tekton-version: v0.14.3
+    triggers-version: v0.6.1
+    kn-version: v0.16.0
+    tekton-cli-version: 0.12.0
+    tutorial-namespace: tektontutorial
   extensions:
     - ./lib/tab-block.js
     - ./lib/remote-include-processor.js
 
 ui:
   bundle:
-    url: https://github.com/redhat-scholars/course-ui/releases/download/v0.1.5/ui-bundle.zip
+    url: https://github.com/redhat-scholars/course-ui/releases/download/v0.1.6/ui-bundle.zip
     snapshot: true
   supplemental_files:
     - path: ui.yml
@@ -34,4 +46,5 @@ ui:
     - path: .nojekyll
 
 output:
+  clean: true
   dir: ./gh-pages

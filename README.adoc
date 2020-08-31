@@ -2,6 +2,24 @@
 
 This is demo courseware, showing the site content build examples.
 
+== Generate Publishing Site
+
+[source,bash,attributes]
+----
+docker build -t redhat-scholars/demo-course .
+----
+
+Running the site
+
+[source,bash,attributes]
+----
+docker run -it --rm -p  8080:80 redhat-scholars/demo-course
+----
+
+Open the generated site at http://localhost:8080
+
+NOTE: The following command is still a WIP
+
 == Run development mode
 
 [source,bash,attributes]
@@ -11,15 +29,4 @@ docker run -d --rm\
   -p 3000:3000 \
   -v $PWD:/usr/src/app:Z \
   quay.io/redhat-scholars/course-site-builder dev
-----
-
-== Generate Publishing Site
-
-[source,bash,attributes]
-----
-docker run -it \
-  --name=demo-course-dev \
-  -p 3000:3000 \
-  -v $PWD:/usr/src/app \
-  quay.io/redhat-scholars/course-site-builder site -p site.yml
 ----
