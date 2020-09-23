@@ -4,8 +4,6 @@ ADD . /antora/
 
 RUN antora generate --stacktrace site.yml
 
-FROM docker.io/nginx
+FROM registry.access.redhat.com/rhscl/httpd-24-rhel7
 
-COPY --from=builder /antora/gh-pages/ /usr/share/nginx/html/
-
-EXPOSE 80
+COPY --from=builder /antora/gh-pages/ /var/www/html/
