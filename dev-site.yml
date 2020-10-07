@@ -16,13 +16,16 @@ content:
 asciidoc:
   attributes:
     tutorial-namespace: demo
+    page-pagination: true
   extensions:
     - ./lib/remote-include-processor.js
     - ./lib/tab-block.js
 
 ui:
   bundle:
-    url: https://github.com/redhat-scholars/course-ui/releases/download/v0.1.6/ui-bundle.zip
+    url: https://github.com/redhat-scholars/course-ui/releases/download/v01.7/ui-bundle.zip
+    # used only for development and testing locally
+    #url: /Users/kameshs/git/redhat-scholars/course-ui/build/ui-bundle.zip
     snapshot: true
   supplemental_files:
     - path: ui.yml
