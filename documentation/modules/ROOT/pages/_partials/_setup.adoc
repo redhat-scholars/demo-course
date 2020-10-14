@@ -4,6 +4,8 @@ Hello %USER% your password is %PASSWORD%
 
 Here is a User specific link with a role https://console.openshift.com[OpenShift Console,role='query-params-link']
 
+https://example.com.%USER%/%PASSWORD%[Link with Attributes,role='params-link']
+
 [#prerequisite]
 == Prerequisite CLI tools
 
