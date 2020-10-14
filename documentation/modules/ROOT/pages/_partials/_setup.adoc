@@ -1,5 +1,7 @@
 == User Information
 
+The text like Hello `%USER%` your password is `%PASSWORD%`, gets replaced as:
+
 Hello %USER% your password is %PASSWORD%
 
 Here is a User specific link with a role https://console.openshift.com[OpenShift Console,role='query-params-link']
